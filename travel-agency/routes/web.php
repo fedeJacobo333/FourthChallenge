@@ -6,16 +6,16 @@ Route::GET('/', function () {
     return view('welcome');
 });
 
-Route::GET('/Cities', 'App\Http\Controllers\CitiesController@index');
+Route::GET('/cities', 'App\Http\Controllers\CitiesController@index');
 
-Route::POST('/Cities',  'App\Http\Controllers\CitiesController@store');
+Route::POST('/cities',  'App\Http\Controllers\CitiesController@store');
 
-Route::GET('/Cities/{city}/edit',  'App\Http\Controllers\CitiesController@edit');
+Route::GET('/cities/{city}/edit',  'App\Http\Controllers\CitiesController@edit');
 
-Route::PUT('/Cities/{city}',  'App\Http\Controllers\CitiesController@update');
+Route::PUT('/cities/{city}',  'App\Http\Controllers\CitiesController@update');
 
-Route::GET('/Cities/{city}/delete',  'App\Http\Controllers\CitiesController@destroy');
+Route::Delete('/cities/{city}',  'App\Http\Controllers\CitiesController@destroy');
 
-Route::GET('/Cities/create',  'App\Http\Controllers\CitiesController@create');
+Route::GET('/cities/create',  'App\Http\Controllers\CitiesController@create');
 
-Route::GET('/Cities/{city}',  'App\Http\Controllers\CitiesController@show');
+Route::GET('/cities/{city}',  'App\Http\Controllers\CitiesController@show');

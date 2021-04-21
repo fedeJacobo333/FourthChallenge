@@ -23,7 +23,7 @@ class CitiesController extends Controller
     public function store()
     {
         Cities::create($this->validateCity());
-        return redirect('/Cities');
+        return redirect('/cities');
     }
 
     public function show(Cities $city)
@@ -39,17 +39,17 @@ class CitiesController extends Controller
     public function update(Cities $city)
     {
         $city->update($this->validateCity());
-        return redirect('/Cities/'.$city->id);
+        return redirect('/cities/'.$city->id);
     }
 
     public function destroy(Cities $city)
     {
         $city->delete();
-        return redirect('/Cities');
+        return redirect('/cities');
     }
 
     public function validateCity(): array
     {
-        return request()->validate(['name' => 'required', 'unique:cities']);
+        return request()->validate(['name' => 'required']);
     }
 }

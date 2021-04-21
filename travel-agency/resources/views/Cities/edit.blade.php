@@ -1,6 +1,6 @@
 <h1>Editar ciudad</h1>
 
-<form method="POST" action="/Cities/{{ $city->id }}">
+<form method="POST" action="/cities/{{ $city->id }}">
     @csrf
     @method('PUT')
 

@@ -1,6 +1,6 @@
 <h1>Crear ciudad</h1>
 
-<form method="POST" action="/Cities">
+<form method="POST" action="/cities">
     @csrf
     <div>
         <label for="name">Name</label>
