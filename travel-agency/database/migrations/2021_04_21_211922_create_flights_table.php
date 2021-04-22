@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCitiesTable extends Migration
+class CreateFlightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->date('departureTime');
+            $table->date('arrivalTime');
             $table->timestamps();
         });
     }
@@ -27,8 +28,9 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('cities', function (Blueprint $table) {
-            $table->dropColumn('name');
+        Schema::table('flights', function (Blueprint $table) {
+            $table->dropColumn('departureTime');
+            $table->dropColumn('arrivalTime');
         });
     }
 }

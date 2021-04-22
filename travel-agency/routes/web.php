@@ -36,3 +36,18 @@ Route::Delete('/airlines/{airline}',  'App\Http\Controllers\AirlinesController@d
 Route::GET('/airlines/create',  'App\Http\Controllers\AirlinesController@create');
 
 Route::GET('/airlines/{airline}',  'App\Http\Controllers\AirlinesController@show');
+
+//flights endpoints
+Route::GET('/flights', 'App\Http\Controllers\FlightsController@index');
+
+Route::POST('/flights',  'App\Http\Controllers\FlightsController@store');
+
+Route::GET('/flights/{flight}/edit',  'App\Http\Controllers\FlightsController@edit');
+
+Route::PUT('/flights/{flight}',  'App\Http\Controllers\FlightsController@update');
+
+Route::Delete('/flights/{flight}',  'App\Http\Controllers\FlightsController@destroy');
+
+Route::GET('/flights/create',  'App\Http\Controllers\FlightsController@create');
+
+Route::GET('/flights/{flight}',  'App\Http\Controllers\FlightsController@show');

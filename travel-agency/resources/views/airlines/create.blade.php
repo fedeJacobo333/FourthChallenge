@@ -9,7 +9,7 @@
                    type="text"
                    name="name"
                    id="name"
-                   required>
+                   >
         </div>
     </div>
     <div>

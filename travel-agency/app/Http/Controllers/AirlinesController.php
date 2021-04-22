@@ -23,7 +23,8 @@ class AirlinesController extends Controller
 
     public function store()
     {
-        $attributes = $this->validateAirline();
+        dd($this->validateAirline());
+        //$attributes = ;
         if(request()->has('multiDestEnable')){
             $attributes = Arr::add($attributes, 'multiDestEnable', TRUE);
         }else{
