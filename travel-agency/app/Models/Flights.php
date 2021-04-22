@@ -10,4 +10,10 @@ class Flights extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
+    public function cities()
+    {
+        return $this->hasMany(Cities::class);
+    }
 }

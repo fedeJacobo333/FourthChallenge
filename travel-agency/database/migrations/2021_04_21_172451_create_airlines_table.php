@@ -14,7 +14,7 @@ class CreateAirlinesTable extends Migration
     public function up()
     {
         Schema::create('airlines', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->text('businessDescription');
             $table->boolean('multiDestEnable');

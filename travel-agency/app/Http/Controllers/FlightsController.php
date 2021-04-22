@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cities;
 use App\Models\Flights;
-use DOMDocument;
 use Exception;
 
 class FlightsController extends Controller
@@ -12,7 +11,7 @@ class FlightsController extends Controller
 
     public function index()
     {
-        $flights = Flights::latest()->get();
+        $flights = Flights::latest('departureTime')->get();
         return view('flights.index', ['flights' => $flights]);
     }
 
@@ -27,7 +26,14 @@ class FlightsController extends Controller
     public function store()
     {
         try {
-            Flights::create($this->validateFlight());
+            $this->validateFlight();
+
+            $fligth = new Flights();
+
+            $this->createFlight($fligth);
+
+            $fligth->save();
+
             return redirect('/flights');
         }catch (Exception $e){
             echo $e->getMessage();
@@ -37,21 +43,25 @@ class FlightsController extends Controller
 
     public function show(Flights $flight)
     {
-        return view('$flights.show', ['flight' => $flight]);
+        return view('flights.show', ['flight' => $flight]);
     }
 
 
     public function edit(Flights $flight)
     {
-        return view('$flights.edit', ['flight' => $flight]);
+        $cities = Cities::latest()->get();
+        return view('flights.edit', ['flight' => $flight, 'cities'=>$cities]);
     }
 
 
     public function update(Flights $flight)
     {
         $this->validateFlight();
-        $flight->update($this->validateFlight());
-        return redirect('/$flights/'.$flight->id);
+
+        $this->createFlight($flight);
+
+        $flight->save();
+        return redirect('/flights/'.$flight->id);
     }
 
 
@@ -76,5 +86,14 @@ class FlightsController extends Controller
             'arrivalCity' => 'required',
             'departureTime' => 'required',
             'arrivalTime' => 'required']);
+    }
+
+
+    public function createFlight(Flights $fligth): void
+    {
+        $fligth->departureCity = json_decode(request()->get('departureCity'))->id;
+        $fligth->arrivalCity = json_decode(request()->get('arrivalCity'))->id;
+        $fligth->departureTime = request()->get('departureTime');
+        $fligth->arrivalTime = request()->get('arrivalTime');
     }
 }

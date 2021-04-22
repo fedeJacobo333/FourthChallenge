@@ -2,7 +2,11 @@
 
 <h1>Lista de vuelos</h1>
 @foreach($flights as $flight)
-    <h3>vuelo de id:  {{ $flight->id }}</h3>
+    <h2>vuelo de id:  {{ $flight->id }}</h2>
+    <h3>Desde: {{ $flight->departureCity }}</h3>
+    <h3>Hasta: {{ $flight->arrivalCity }}</h3>
+    <h3>Horario de salida: {{ $flight->departureTime }}</h3>
+    <h3>Horario de llegada: {{ $flight->arrivalTime }}</h3>
     <form style="display: contents" method="GET" action="/flights/{{ $flight->id }}/edit">
         @csrf
 

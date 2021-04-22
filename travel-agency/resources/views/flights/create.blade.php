@@ -36,10 +36,6 @@
     </div>
     <br>
 
-    <div>
-        <h4 id="errors"></h4>
-    </div>
-
     <br>
 
     <div>
