@@ -17,8 +17,26 @@ class CreateAirlinesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('businessDescription');
-            $table->boolean('multiDestEnable');
             $table->timestamps();
+        });
+
+        Schema::create('airline_city', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('airline_id');
+            $table->unsignedBigInteger('city_id');
+            $table->timestamps();
+
+            $table->unique(['airline_id', 'city_id']);
+
+            $table->foreign('airline_id')
+                ->references('id')
+                ->on('airlines')
+                ->onDelete('cascade');
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('cascade');
         });
     }
 

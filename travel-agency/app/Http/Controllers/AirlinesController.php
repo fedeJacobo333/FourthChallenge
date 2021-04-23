@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airlines;
+use App\Models\Cities;
 use Illuminate\Support\Arr;
 
 class AirlinesController extends Controller
@@ -17,7 +18,8 @@ class AirlinesController extends Controller
 
     public function create()
     {
-        return view('airlines.create');
+        $cities = Cities::latest()->get();
+        return view('airlines.create', ['cities' => $cities]);
     }
 
 

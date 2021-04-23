@@ -15,10 +15,11 @@ class CreateFlightsTable extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->time('departureTime');
-            $table->time('arrivalTime');
+            $table->dateTime('departureTime');
+            $table->dateTime('arrivalTime');
             $table->unsignedBigInteger('departureCity');
             $table->unsignedBigInteger('arrivalCity');
+            $table->unsignedBigInteger('airline_id');
             $table->timestamps();
 
             $table->foreign('departureCity')
@@ -28,6 +29,10 @@ class CreateFlightsTable extends Migration
             $table->foreign('arrivalCity')
                 ->references('id')
                 ->on('cities')
+                ->onDelete('cascade');
+            $table->foreign('airline_id')
+                ->references('id')
+                ->on('airlines')
                 ->onDelete('cascade');
         });
     }

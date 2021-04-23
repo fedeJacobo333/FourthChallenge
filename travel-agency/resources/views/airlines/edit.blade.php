@@ -26,14 +26,17 @@
     </div>
     <div>
         <div>
-            <input class="input"
-                   type="checkbox"
-                   name="multiDestEnable"
-                   id="multiDestEnable"
-                   <?php
-                        if($airline->multiDestEnable == 1)  echo ' checked';
-                    ?>
-            <label for="multiDestEnable">Availability to make many flights to different destinations</label>
+            <label for="availableCity">Available cities</label>
+            <br>
+            <select name="availableCity" id="availableCity" required multiple>
+                @foreach($cities as $city)
+                    @if($city->id == $flight->arrivalCity)
+                        <option selected="selected" value="{{ $city }}">{{ $city->name }}</option>
+                    @else
+                        <option value="{{ $city }}">{{ $city->name }}</option>
+                    @endif
+                @endforeach
+            </select>
         </div>
     </div>
     <div>

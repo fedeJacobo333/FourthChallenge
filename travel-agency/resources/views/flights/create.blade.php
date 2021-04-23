@@ -5,6 +5,17 @@
 
     <div>
         <div>
+            <label for="airline_id">Airline</label>
+            <select name="airline_id" id="airline_id" required>
+                @foreach($airlines as $airline)
+                    <option value="{{ $airline }}">{{ $airline->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <br>
+    <div>
+        <div>
             <label for="departureCity">Departure city</label>
             <select name="departureCity" id="departureCity" required>
                 @foreach($cities as $city)
@@ -27,14 +38,13 @@
     <br>
     <div>
         <label for="departureTime">Departure time</label>
-        <input type="time" id="departureTime" name='departureTime' size='9' value=""/>
+        <input type="datetime-local" id="departureTime" name='departureTime' size='9' value=""/>
     </div>
     <br>
     <div>
         <label for="arrivalTime">Arrival time</label>
-        <input type="time" id="arrivalTime" name='arrivalTime' size='9' value="" required/>
+        <input type="datetime-local" id="arrivalTime" name='arrivalTime' size='9' value="" required/>
     </div>
-    <br>
 
     <br>
 

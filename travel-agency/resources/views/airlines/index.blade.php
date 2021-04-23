@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="resources/css/app.css" type="text/css">
+@extends('welcome')
 
+@section('content')
 <h1>Lista de aereolineas</h1>
 @foreach($airlines as $airline)
     <h2 style="margin: auto"> {{ $airline->name }} </h2>
@@ -26,3 +27,5 @@
 @endforeach
 <br>
 <a href="/airlines/create">Crear</a>
+
+@stop

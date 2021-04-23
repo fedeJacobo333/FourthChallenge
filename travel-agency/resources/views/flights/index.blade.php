@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="resources/css/app.css" type="text/css">
+<link rel="stylesheet" href="../../../public/css/app.css" type="text/css">
 
 <h1>Lista de vuelos</h1>
 @foreach($flights as $flight)

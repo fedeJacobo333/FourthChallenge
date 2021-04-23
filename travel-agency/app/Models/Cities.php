@@ -10,4 +10,8 @@ class Cities extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function airlines(){
+        $this->belongsToMany(Airlines::class);
+    }
 }

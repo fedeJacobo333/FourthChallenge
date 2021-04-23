@@ -23,11 +23,13 @@
     </div>
     <div>
         <div>
-            <input class="input"
-                   type="checkbox"
-                   name="multiDestEnable"
-                   id="multiDestEnable">
-            <label for="multiDestEnable">Availability to make many flights to different destinations</label>
+            <label for="availableCity">Available cities</label>
+            <br>
+            <select name="availableCity" id="availableCity" required multiple>
+                @foreach($cities as $city)
+                    <option value="{{ $city }}">{{ $city->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div>

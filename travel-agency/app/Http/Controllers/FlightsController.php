@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Airlines;
 use App\Models\Cities;
 use App\Models\Flights;
 use Exception;
@@ -19,25 +20,15 @@ class FlightsController extends Controller
     public function create()
     {
         $cities = Cities::latest()->get();
-        return view('flights.create', ['cities'=>$cities]);
+        $airlines = Airlines::latest()->get();
+        return view('flights.create', ['cities'=>$cities, 'airlines'=>$airlines]);
     }
 
 
     public function store()
     {
-        try {
-            $this->validateFlight();
-
-            $fligth = new Flights();
-
-            $this->createFlight($fligth);
-
-            $fligth->save();
-
-            return redirect('/flights');
-        }catch (Exception $e){
-            echo $e->getMessage();
-        }
+        Flights::create($this->validateFlight());
+        return redirect('/flights');
     }
 
 
@@ -56,11 +47,7 @@ class FlightsController extends Controller
 
     public function update(Flights $flight)
     {
-        $this->validateFlight();
-
-        $this->createFlight($flight);
-
-        $flight->save();
+        $flight->update($this->validateFlight());
         return redirect('/flights/'.$flight->id);
     }
 
@@ -73,27 +60,13 @@ class FlightsController extends Controller
 
     public function validateFlight(): array
     {
-        $departureCity = request()->get('departureCity');
-        $arrivalCity = request()->get('arrivalCity');
-        $departureTime = request()->get('departureTime');
-        $arrivalTime = request()->get('arrivalTime');
-        if (!$departureTime) throw new Exception('Se debe seleccionar la hora de salida');
-        if (!$arrivalTime) throw new Exception('Se debe seleccionar la hora de llegada');
-        if ($departureTime >= $arrivalTime) throw new Exception('La hora de salida debe ser anterior a la de llegada');
-        if($departureCity == $arrivalCity) throw new Exception('la ciudad de origen y la de destino no pueden ser la misma');
-
-        return request()->validate(['departureCity' => 'required',
+        return request()->validate(['airline_id' => 'required',
+            'departureCity' => 'required',
             'arrivalCity' => 'required',
-            'departureTime' => 'required',
-            'arrivalTime' => 'required']);
-    }
-
-
-    public function createFlight(Flights $fligth): void
-    {
-        $fligth->departureCity = json_decode(request()->get('departureCity'))->id;
-        $fligth->arrivalCity = json_decode(request()->get('arrivalCity'))->id;
-        $fligth->departureTime = request()->get('departureTime');
-        $fligth->arrivalTime = request()->get('arrivalTime');
+            'departureTime' => 'required|date|date_format',
+            'arrivalTime' => 'required|date|date_format'],
+            $messages = [
+                'required' => 'The :attribute field is required.',
+            ]);
     }
 }
