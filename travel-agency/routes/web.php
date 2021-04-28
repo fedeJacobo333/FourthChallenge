@@ -6,33 +6,32 @@ Route::GET('/', function () {
     return view('welcome');
 });
 
-//cities enpoints
+Route::group(['prefix' => '/cities'], function () {
+    Route::GET('', 'CitiesController@index');
+    Route::POST('',  'CitiesController@store');
+    Route::GET('/{city}/edit',  'CitiesController@edit');
+    Route::PUT('/{city}',  'CitiesController@update');
+    Route::Delete('/{city}',  'CitiesController@destroy');
+    Route::GET('/create',  'CitiesController@create');
+    Route::GET('/{city}',  'CitiesController@show');
+});
 
-Route::GET('/cities', 'App\Http\Controllers\CitiesController@index');
+Route::group(['prefix' => '/airlines'], function () {
+    Route::GET('', 'AirlinesController@index');
+    Route::POST('',  'AirlinesController@store');
+    Route::GET('/{airline}/edit',  'AirlinesController@edit');
+    Route::PUT('/{airline}',  'AirlinesController@update');
+    Route::Delete('/{airline}',  'AirlinesController@destroy');
+    Route::GET('/create',  'AirlinesController@create');
+    Route::GET('/{airline}',  'AirlinesController@show');
+});
 
-Route::POST('/cities',  'App\Http\Controllers\CitiesController@store');
-
-Route::GET('/cities/{city}/edit',  'App\Http\Controllers\CitiesController@edit');
-
-Route::PUT('/cities/{city}',  'App\Http\Controllers\CitiesController@update');
-
-Route::Delete('/cities/{city}',  'App\Http\Controllers\CitiesController@destroy');
-
-Route::GET('/cities/create',  'App\Http\Controllers\CitiesController@create');
-
-Route::GET('/cities/{city}',  'App\Http\Controllers\CitiesController@show');
-
-//airlines endpoints
-Route::GET('/airlines', 'App\Http\Controllers\AirlinesController@index');
-
-Route::POST('/airlines',  'App\Http\Controllers\AirlinesController@store');
-
-Route::GET('/airlines/{airline}/edit',  'App\Http\Controllers\AirlinesController@edit');
-
-Route::PUT('/airlines/{airline}',  'App\Http\Controllers\AirlinesController@update');
-
-Route::Delete('/airlines/{airline}',  'App\Http\Controllers\AirlinesController@destroy');
-
-Route::GET('/airlines/create',  'App\Http\Controllers\AirlinesController@create');
-
-Route::GET('/airlines/{airline}',  'App\Http\Controllers\AirlinesController@show');
+Route::group(['prefix' => '/flights'], function () {
+    Route::GET('', 'FlightsController@index');
+    Route::POST('',  'FlightsController@store');
+    Route::GET('/{flight}/edit',  'FlightsController@edit');
+    Route::PUT('/{flight}',  'FlightsController@update');
+    Route::Delete('/{flight}',  'FlightsController@destroy');
+    Route::GET('/create',  'FlightsController@create');
+    Route::GET('/{flight}',  'FlightsController@show');
+});

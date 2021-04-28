@@ -1,28 +1,42 @@
-<link rel="stylesheet" href="resources/css/app.css" type="text/css">
+@extends('layout')
 
-<h1>Lista de aereolineas</h1>
+@section('header')
+    @parent
+
+@endsection
+
+@section('content')
+<div class="action-title">
+    <h1>Lista de aereolineas</h1>
+    <a href="/airlines/create"><h1>Crear nueva aereolinea</h1></a>
+</div>
+
 @foreach($airlines as $airline)
-    <h2 style="margin: auto"> {{ $airline->name }} </h2>
-    <h3 style="margin: auto"> {{ $airline->businessDescription }} </h3>
+    <div class="card">
+        <h2> {{ $airline->name }} </h2>
+        <h3> {{ $airline->businessDescription }} </h3>
+        <tr><h3>Ciudades disponibles:</h3></tr>
+        <tr>
+            @foreach($airline->cities()->get()->all() as $city)
+                <td><h4>{{ $city->name }}</h4></td>
+            @endforeach
+        </tr>
+        <div class="actions">
+            <form method="GET" action="/airlines/{{ $airline->id }}/edit">
+                @csrf
 
-    @if($airline->multiDestEnable == 1)
-        <h3 style="margin: auto"> Esta habilitada para realizar muchos vuelos a diferentes destinos. </h3>
-    @else
-        <h3 style="margin: auto"> No esta habilitada para realizar muchos vuelos a diferentes destinos. </h3>
-    @endif
+                <button class="button is-link" type="submit">Edit</button>
+            </form>
+            <form method="POST" action="/airlines/{{ $airline->id }}">
+                @csrf
+                @method('DELETE')
 
-    <form style="display: contents" method="GET" action="/airlines/{{ $airline->id }}/edit">
-        @csrf
-
-        <button style="margin-bottom: 10px" class="button is-link" type="submit">Edit</button>
-    </form>
-    <form style="display: contents" method="POST" action="/airlines/{{ $airline->id }}">
-        @csrf
-        @method('DELETE')
-
-        <button style="margin-bottom: 10px" class="button is-link" type="submit">Delete</button>
-    </form>
-    <br>
+                <button class="button is-link" type="submit">Delete</button>
+            </form>
+        </div>
+        <a href="/flights/create?airline_id={{ $airline->id }}">Crear vuelo </a>
+        <br>
+    </div>
 @endforeach
-<br>
-<a href="/airlines/create">Crear</a>
+
+@endsection

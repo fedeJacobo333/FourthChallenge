@@ -1,4 +1,6 @@
-<link rel="stylesheet" href="resources/css/app.css" type="text/css">
+@extends('welcome')
+
+@section('content')
 
 <h1>Lista de ciudades</h1>
 @foreach($cities as $city)
