@@ -16,10 +16,9 @@ Route::group(['prefix' => '/cities'], function () {
     Route::GET('/{city}',  'CitiesController@show');
 });
 
-//crear vuelos desde airline
 Route::group(['prefix' => '/airlines'], function () {
-    Route::GET('/', 'AirlinesController@index');
-    Route::POST('/',  'AirlinesController@store');
+    Route::GET('', 'AirlinesController@index');
+    Route::POST('',  'AirlinesController@store');
     Route::GET('/{airline}/edit',  'AirlinesController@edit');
     Route::PUT('/{airline}',  'AirlinesController@update');
     Route::Delete('/{airline}',  'AirlinesController@destroy');

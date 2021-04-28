@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airlines;
-use App\Models\Cities;
 use App\Models\Flights;
-use Exception;
 
 class FlightsController extends Controller
 {
@@ -19,15 +17,17 @@ class FlightsController extends Controller
 
     public function create()
     {
-        $cities = Cities::latest()->get();
-        $airlines = Airlines::latest()->get();
-        return view('flights.create', ['cities'=>$cities, 'airlines'=>$airlines]);
+        $airlineId = request('airline_id');
+        $cities = Airlines::find($airlineId)->first()->cities()->get();
+        return view('flights.create', ['cities'=>$cities, 'airline_id'=>$airlineId]);
     }
 
 
     public function store()
     {
-        Flights::create($this->validateFlight());
+        $attributes = $this->validateFlight();
+        $attributes['airline_id'] = request('airline_id');
+        Flights::create($attributes);
         return redirect('/flights');
     }
 
@@ -40,14 +40,17 @@ class FlightsController extends Controller
 
     public function edit(Flights $flight)
     {
-        $cities = Cities::latest()->get();
-        return view('flights.edit', ['flight' => $flight, 'cities'=>$cities]);
+        $airlineId = request('airline_id');
+        $cities = Airlines::find($airlineId)->first()->cities()->get();
+        return view('flights.edit', ['flight' => $flight, 'cities'=>$cities, 'airline_id'=>$airlineId]);
     }
 
 
     public function update(Flights $flight)
     {
-        $flight->update($this->validateFlight());
+        $attributes = $this->validateFlight();
+        $attributes['airline_id'] = request('airline_id');
+        $flight->update($attributes);
         return redirect('/flights/'.$flight->id);
     }
 
@@ -60,13 +63,14 @@ class FlightsController extends Controller
 
     public function validateFlight(): array
     {
-        return request()->validate(['airline_id' => 'required',
-            'departureCity' => 'required',
+        return request()->validate(['departureCity' => 'required|different:arrivalCity',
             'arrivalCity' => 'required',
-            'departureTime' => 'required|date|date_format',
-            'arrivalTime' => 'required|date|date_format'],
+            'departureTime' => 'required|date|before:arrivalTime',
+            'arrivalTime' => 'required|date'],
             $messages = [
-                'required' => 'The :attribute field is required.',
+                'required' => 'The :attribute field is required',
+                'before' => 'Departure time cannot be later than arrival time',
+                'different' => 'Departure and arrival cities must be different'
             ]);
     }
 }

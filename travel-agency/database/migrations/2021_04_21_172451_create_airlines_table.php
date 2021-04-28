@@ -20,20 +20,20 @@ class CreateAirlinesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('airline_city', function (Blueprint $table) {
+        Schema::create('airlines_cities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('airline_id');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('airlines_id');
+            $table->unsignedBigInteger('cities_id');
             $table->timestamps();
 
-            $table->unique(['airline_id', 'city_id']);
+            $table->unique(['airlines_id', 'cities_id']);
 
-            $table->foreign('airline_id')
+            $table->foreign('airlines_id')
                 ->references('id')
                 ->on('airlines')
                 ->onDelete('cascade');
 
-            $table->foreign('city_id')
+            $table->foreign('cities_id')
                 ->references('id')
                 ->on('cities')
                 ->onDelete('cascade');
@@ -51,6 +51,11 @@ class CreateAirlinesTable extends Migration
             $table->dropColumn('name');
             $table->dropColumn('businessDescription');
             $table->dropColumn('multiDestEnable');
+        });
+
+        Schema::table('airlines_city', function (Blueprint $table) {
+            $table->dropColumn('airlines_id');
+            $table->dropColumn('cities_id');
         });
     }
 }

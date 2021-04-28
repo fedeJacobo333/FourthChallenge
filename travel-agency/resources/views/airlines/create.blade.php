@@ -1,3 +1,7 @@
+@extends('welcome')
+
+@section('content')
+
 <h1>Crear Aereolinea</h1>
 
 <form method="POST" action="/airlines">
@@ -9,7 +13,7 @@
                    type="text"
                    name="name"
                    id="name"
-                   >
+                   required>
         </div>
     </div>
     <div>
@@ -25,13 +29,24 @@
         <div>
             <label for="availableCity">Available cities</label>
             <br>
-            <select name="availableCity" id="availableCity" required multiple>
+            <select name="availableCity[]" id="availableCity" required multiple>
                 @foreach($cities as $city)
-                    <option value="{{ $city }}">{{ $city->name }}</option>
+                    <option value="{{ $city->id }}">{{ $city->name }}</option>
                 @endforeach
             </select>
         </div>
     </div>
+
+    <br>
+
+    @if(count($errors->all())>0)
+        @foreach($errors->all() as $error)
+            <div class="alert alert-danger">{{ $error }}</div>
+        @endforeach
+    @endif
+
+    <br>
+
     <div>
         <div>
             <button class="button is-link" type="submit">Submit</button>

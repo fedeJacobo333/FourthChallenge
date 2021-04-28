@@ -1,23 +1,13 @@
+@extends('welcome')
+
+@section('content')
+
 <h1>Editar vuelo</h1>
 
-<form method="POST" action="/flights/{{ $flight->id }}">
+<form method="POST" action="/flights/{{ $flight->id }}?airline_id={{ $airline_id }}">
     @csrf
     @method('PUT')
 
-    <div>
-        <div>
-            <label for="airline_id">Airline</label>
-            <select name="airline_id" id="airline_id" required>
-                @foreach($airlines as $airline)
-                    @if($airline->id == $flight->airline)
-                        <option selected="selected" value="{{ $airline }}">{{ $airline->name }}</option>
-                    @else
-                        <option value="{{ $airline }}">{{ $airline->name }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-    </div>
 
     <div>
         <div>
@@ -25,9 +15,9 @@
             <select name="departureCity" id="departureCity" required>
                 @foreach($cities as $city)
                     @if($city->id == $flight->departureCity)
-                        <option selected="selected" value="{{ $city }}">{{ $city->name }}</option>
+                        <option selected="selected" value="{{ $city->id }}">{{ $city->name }}</option>
                     @else
-                        <option value="{{ $city }}">{{ $city->name }}</option>
+                        <option value="{{ $city->id }}">{{ $city->name }}</option>
                     @endif
                 @endforeach
             </select>
@@ -40,9 +30,9 @@
             <select name="arrivalCity" id="arrivalCity" required>
                 @foreach($cities as $city)
                     @if($city->id == $flight->arrivalCity)
-                        <option selected="selected" value="{{ $city }}">{{ $city->name }}</option>
+                        <option selected="selected" value="{{ $city->id }}">{{ $city->name }}</option>
                     @else
-                        <option value="{{ $city }}">{{ $city->name }}</option>
+                        <option value="{{ $city->id }}">{{ $city->name }}</option>
                     @endif
                 @endforeach
             </select>
@@ -51,7 +41,7 @@
     <br>
     <div>
         <label for="departureTime">Departure time</label>
-        <input type="datetime-local" id="departureTime" name='departureTime' size='9' value="{{ $flight->departureTime }}"/>
+        <input type="datetime-local" id="departureTime" name='departureTime' size='9' value="{{ $flight->departureTime }}" required/>
     </div>
     <br>
     <div>
@@ -59,6 +49,14 @@
         <input type="datetime-local" id="arrivalTime" name='arrivalTime' size='9' value="{{ $flight->arrivalTime }}" required/>
     </div>
     <br>
+
+    <br>
+
+    @if(count($errors->all())>0)
+        @foreach($errors->all() as $error)
+            <div class="alert alert-danger">{{ $error }}</div>
+        @endforeach
+    @endif
 
     <br>
 

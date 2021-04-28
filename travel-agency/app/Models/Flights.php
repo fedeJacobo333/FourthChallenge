@@ -12,8 +12,17 @@ class Flights extends Model
     protected $guarded = [];
 
 
-    public function cities()
+    public function departureCity()
     {
-        return $this->hasMany(Cities::class);
+        return $this->belongsTo(Cities::class, 'departureCity');
+    }
+
+    public function arrivalCity()
+    {
+        return $this->belongsTo(Cities::class, 'arrivalCity');
+    }
+
+    public function airline(){
+        return $this->belongsTo(Airlines::class, 'airline_id');
     }
 }

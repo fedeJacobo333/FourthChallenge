@@ -12,6 +12,10 @@ class Cities extends Model
     protected $guarded = [];
 
     public function airlines(){
-        $this->belongsToMany(Airlines::class);
+        $this->belongsToMany(Airlines::class, 'airlines_cities');
+    }
+
+    public function flights(){
+        $this->hasMany(Flights::class);
     }
 }
