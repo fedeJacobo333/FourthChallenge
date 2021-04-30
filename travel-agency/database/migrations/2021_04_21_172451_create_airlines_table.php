@@ -47,15 +47,7 @@ class CreateAirlinesTable extends Migration
      */
     public function down()
     {
-        Schema::table('airlines', function (Blueprint $table) {
-            $table->dropColumn('name');
-            $table->dropColumn('businessDescription');
-            $table->dropColumn('multiDestEnable');
-        });
-
-        Schema::table('airlines_city', function (Blueprint $table) {
-            $table->dropColumn('airlines_id');
-            $table->dropColumn('cities_id');
-        });
+        Schema::dropIfExists('airlines');
+        Schema::dropIfExists('airlines_city');
     }
 }

@@ -1,6 +1,8 @@
-@extends('welcome')
+@extends('layout')
 
 @section('content')
 
 <h1>Informacion de la ciudad</h1>
 <h3>{{ $city->name }}</h3>
+
+@endsection

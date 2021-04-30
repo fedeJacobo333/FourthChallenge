@@ -1,0 +1,122 @@
+a {
+    text-decoration: none;
+}
+
+nav a{
+    padding-left: 20px;
+    padding-right: 20px;
+    color: rgba(255,255,255,.5);
+    text-transform: uppercase;
+}
+
+a:hover{
+    color: white;
+}
+
+#app-title{
+    margin: 0;
+    color: white;
+    font-size: 1.6em;
+    padding: 20px 20px;
+}
+
+.action{
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-title{
+}
+
+.action-create{
+    color: rgba(255,255,255,.5);
+    background-color: #773dbd;
+    align-self: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.action-create:hover {
+    border-color: white;
+    border-style: double;
+}
+
+.card{
+    border-radius: 10px;
+
+    padding: 5px;
+    max-width: 300px;
+    text-align: center;
+    margin: 5px 5px;
+    float: left;
+}
+
+.card-header{
+    justify-content: space-around;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.card{
+    border-radius: 10px;
+    background-color: #718096;
+    padding: 5px;
+    max-width: 300px;
+    text-align: center;
+    margin: 5px 5px;
+    float: left;
+}
+
+.card h2{
+    margin: 5px;
+}
+.card h3{
+    margin: 2px;
+}
+.card h4{
+    margin: 1px;
+}
+
+.date-filter{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 15px;
+}
+
+header{
+    background-color: #773dbd;
+}
+.header{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#menu-table{
+    color: white;
+}
+
+#menu-body{
+    margin: 0;
+}
+
+.menu{
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+
+
+.container{
+    margin: 10px;
+}
+
+.actions{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 15px 5px 15px;
+}
+
+.current_page_item{
+    color: white;
+}

@@ -10,15 +10,31 @@ class FlightsController extends Controller
 
     public function index()
     {
-        $flights = Flights::latest('departureTime')->get();
-        return view('flights.index', ['flights' => $flights]);
+        $airline_id = request('airline_id');
+        $from = request('from');
+        $to = request('to');
+        if($airline_id) {
+            if($from && $to){
+                $flights = Airlines::find($airline_id)->flights()->whereBetween('departureTime', [$from, $to])->orderBy('departureTime')->get();
+            }else{
+                $flights = Airlines::find($airline_id)->flights()->orderBy('departureTime')->get();
+            }
+            return view('flights.index', ['flights' => $flights, 'airline_id'=>$airline_id]);
+        }else {
+            if($from && $to){
+                $flights = Flights::latest('departureTime')->whereBetween('departureTime', [$from, $to])->get();
+            }else{
+                $flights = Flights::latest('departureTime')->get();
+            }
+            return view('flights.index', ['flights' => $flights, 'airline_id'=>null]);
+        }
     }
 
 
     public function create()
     {
         $airlineId = request('airline_id');
-        $cities = Airlines::find($airlineId)->first()->cities()->get();
+        $cities = Airlines::find($airlineId)->cities()->get();
         return view('flights.create', ['cities'=>$cities, 'airline_id'=>$airlineId]);
     }
 
@@ -28,7 +44,7 @@ class FlightsController extends Controller
         $attributes = $this->validateFlight();
         $attributes['airline_id'] = request('airline_id');
         Flights::create($attributes);
-        return redirect('/flights');
+        return redirect('/flights?airline_id='.request('airline_id'));
     }
 
 
@@ -41,7 +57,7 @@ class FlightsController extends Controller
     public function edit(Flights $flight)
     {
         $airlineId = request('airline_id');
-        $cities = Airlines::find($airlineId)->first()->cities()->get();
+        $cities = Airlines::find($airlineId)->cities()->get();
         return view('flights.edit', ['flight' => $flight, 'cities'=>$cities, 'airline_id'=>$airlineId]);
     }
 
@@ -72,5 +88,9 @@ class FlightsController extends Controller
                 'before' => 'Departure time cannot be later than arrival time',
                 'different' => 'Departure and arrival cities must be different'
             ]);
+    }
+
+    public function refresh(){
+
     }
 }

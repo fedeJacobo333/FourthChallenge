@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::GET('/', function () {
-    return view('welcome');
+    return view('layout');
 });
 
 Route::group(['prefix' => '/cities'], function () {
