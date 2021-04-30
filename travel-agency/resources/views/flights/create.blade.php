@@ -4,7 +4,7 @@
 
     <h1>Crear vuelo</h1>
 
-    <form method="POST" action="/flights?airline_id={{ $airline }}">
+    <form method="POST" action="/flights">
         @csrf
 
         <br>
@@ -55,6 +55,8 @@
                 <button class="button is-link" type="submit">Submit</button>
             </div>
         </div>
+
+        <input type="hidden" name="airline_id" id="airline_id" value="{{ $airline_id }}">
     </form>
 
 @endsection

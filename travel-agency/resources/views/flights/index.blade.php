@@ -1,24 +1,24 @@
 @extends('layout')
 
 @section('content')
-    <div class="action-title">
+    <div>
         <h1>Lista de vuelos</h1>
-        <div>
-            <form method="GET" action="/flights?airline_id={{ $airline }}">
-                @csrf
-                <div>
-                    <label for="from">From</label>
-                    <input type="datetime-local" id="from" name='from' size='9' value=""/>
-                </div>
-                <div>
-                    <label for="to">To</label>
-                    <input type="datetime-local" id="to" name='to' size='9' value=""/>
-                </div>
-
+        <form class="date-filter" method="GET" action="/flights">
+            @csrf
+            <div>
+                <label for="from">From</label>
+                <input type="datetime-local" id="from" name='from' size='9' value="{{ request('from') }}"/>
+            </div>
+            <div>
+                <label for="to">To</label>
+                <input type="datetime-local" id="to" name='to' size='9' value="{{ request('to') }}"/>
+            </div>
+            <div>
+                <input type="hidden" name="airline_id" id="airline_id" value="{{ $airline_id }}">
                 <button style="margin-bottom: 10px" class="button is-link" type="submit">Refresh</button>
-            </form>
+            </div>
+        </form>
         </div>
-    </div>
     <div class="list">
         @foreach($flights as $flight)
             <div class="card">

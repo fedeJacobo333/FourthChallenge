@@ -26,12 +26,14 @@ a:hover{
 }
 
 .action-title{
-
 }
 
 .action-create{
     color: rgba(255,255,255,.5);
     background-color: #773dbd;
+    align-self: center;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .action-create:hover {
@@ -48,18 +50,45 @@ a:hover{
     margin: 5px 5px;
     float: left;
 }
+
+.card-header{
+    justify-content: space-around;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.card{
+    border-radius: 10px;
+    background-color: #718096;
+    padding: 5px;
+    max-width: 300px;
+    text-align: center;
+    margin: 5px 5px;
+    float: left;
+}
+
+.card h2{
+    margin: 5px;
+}
+.card h3{
+    margin: 2px;
+}
+.card h4{
+    margin: 1px;
+}
+
+.date-filter{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 15px;
+}
+
 header{
     background-color: #773dbd;
 }
 .header{
     max-width: 1200px;
     margin: 0 auto;
-}
-
-.card-header{
-    justify-content: space-between;
-    display: flex;
-    margin-bottom: 5px;
 }
 
 #menu-table{
@@ -80,26 +109,6 @@ header{
 
 .container{
     margin: 10px;
-}
-
-
-.card{
-    border-radius: 10px;
-    background-color: #718096;
-    padding: 5px;
-    max-width: 300px;
-    text-align: center;
-    margin: 5px 5px;
-    float: left;
-}
-.card h2{
-    margin: 5px;
-}
-.card h3{
-    margin: 2px;
-}
-.card h4{
-    margin: 1px;
 }
 
 .actions{

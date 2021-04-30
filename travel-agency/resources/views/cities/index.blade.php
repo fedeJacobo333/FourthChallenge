@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="action-title">
-        <h1>Lista de ciudades</h1>
-        <a class="create" href="/cities/create">Crear nueva ciudad</a>
+    <div class="action">
+        <div class="action-title"><h1>Lista de ciudades</h1></div>
+        <a class="action-create" href="/cities/create">Crear nueva ciudad</a>
     </div>
     <div class="list">
         @foreach($cities as $city)

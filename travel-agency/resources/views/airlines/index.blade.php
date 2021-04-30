@@ -3,7 +3,7 @@
 @section('content')
     <div class="action">
         <div class="action-title"><h1>Lista de aereolineas</h1></div>
-        <a  class="action-create" href="/airlines/create">Crear nueva aereolinea</a>
+        <a class="action-create" href="/airlines/create">Crear nueva aereolinea</a>
     </div>
     <div class="list">
         @foreach($airlines as $airline)

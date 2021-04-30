@@ -11,12 +11,22 @@ class FlightsController extends Controller
     public function index()
     {
         $airline_id = request('airline_id');
+        $from = request('from');
+        $to = request('to');
         if($airline_id) {
-            $flights = Airlines::find($airline_id)->flights()->get();
-            return view('flights.index', ['flights' => $flights, 'airline'=>$airline_id]);
+            if($from && $to){
+                $flights = Airlines::find($airline_id)->flights()->whereBetween('departureTime', [$from, $to])->orderBy('departureTime')->get();
+            }else{
+                $flights = Airlines::find($airline_id)->flights()->orderBy('departureTime')->get();
+            }
+            return view('flights.index', ['flights' => $flights, 'airline_id'=>$airline_id]);
         }else {
-            $flights = Flights::latest('departureTime')->get();
-            return view('flights.index', ['flights' => $flights, 'airline'=>null]);
+            if($from && $to){
+                $flights = Flights::latest('departureTime')->whereBetween('departureTime', [$from, $to])->get();
+            }else{
+                $flights = Flights::latest('departureTime')->get();
+            }
+            return view('flights.index', ['flights' => $flights, 'airline_id'=>null]);
         }
     }
 
@@ -34,7 +44,7 @@ class FlightsController extends Controller
         $attributes = $this->validateFlight();
         $attributes['airline_id'] = request('airline_id');
         Flights::create($attributes);
-        return redirect('/flights');
+        return redirect('/flights?airline_id='.request('airline_id'));
     }
 
 
