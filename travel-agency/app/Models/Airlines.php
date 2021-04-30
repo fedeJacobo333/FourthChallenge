@@ -15,6 +15,6 @@ class Airlines extends Model
     }
 
     public function flights(){
-        return $this->hasMany(Flights::class);
+        return $this->hasMany(Flights::class, 'airline_id');
     }
 }

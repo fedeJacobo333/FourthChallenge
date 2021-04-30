@@ -10,15 +10,21 @@ class FlightsController extends Controller
 
     public function index()
     {
-        $flights = Flights::latest('departureTime')->get();
-        return view('flights.index', ['flights' => $flights]);
+        $airline_id = request('airline_id');
+        if($airline_id) {
+            $flights = Airlines::find($airline_id)->flights()->get();
+            return view('flights.index', ['flights' => $flights, 'airline'=>$airline_id]);
+        }else {
+            $flights = Flights::latest('departureTime')->get();
+            return view('flights.index', ['flights' => $flights, 'airline'=>null]);
+        }
     }
 
 
     public function create()
     {
         $airlineId = request('airline_id');
-        $cities = Airlines::find($airlineId)->first()->cities()->get();
+        $cities = Airlines::find($airlineId)->cities()->get();
         return view('flights.create', ['cities'=>$cities, 'airline_id'=>$airlineId]);
     }
 
@@ -41,7 +47,7 @@ class FlightsController extends Controller
     public function edit(Flights $flight)
     {
         $airlineId = request('airline_id');
-        $cities = Airlines::find($airlineId)->first()->cities()->get();
+        $cities = Airlines::find($airlineId)->cities()->get();
         return view('flights.edit', ['flight' => $flight, 'cities'=>$cities, 'airline_id'=>$airlineId]);
     }
 
@@ -72,5 +78,9 @@ class FlightsController extends Controller
                 'before' => 'Departure time cannot be later than arrival time',
                 'different' => 'Departure and arrival cities must be different'
             ]);
+    }
+
+    public function refresh(){
+
     }
 }

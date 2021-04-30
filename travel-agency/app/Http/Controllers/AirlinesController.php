@@ -25,7 +25,9 @@ class AirlinesController extends Controller
 
     public function store()
     {
-        $airline = Airlines::create($this->validateAirline());
+        $attributes = $this->validateAirline();
+        array_pop($attributes);
+        $airline = Airlines::create($attributes);
         foreach (request('availableCity') as $city){
             $airline->cities()->attach($city);
         }
@@ -49,9 +51,10 @@ class AirlinesController extends Controller
     public function update(Airlines $airline)
     {
         $attributes = $this->validateAirline();
+        array_pop($attributes);
         $airline->update($attributes);
 
-        $airlineUpdated = Airlines::where('id', $airline->id)->first();
+        $airlineUpdated = Airlines::find($airline->id);
         $airlineUpdated->cities()->detach();
         foreach (request('availableCity') as $city){
             $airlineUpdated->cities()->attach($city);
@@ -69,6 +72,11 @@ class AirlinesController extends Controller
     public function validateAirline(): array
     {
         return request()->validate(['name' => 'required',
-            'businessDescription' => 'required']);
+            'businessDescription' => 'required',
+            'availableCity' => 'required|array|min:2'],
+            $messages = [
+                'availableCity.required' => 'At least 2 cities must be selected',
+            ]
+        );
     }
 }
