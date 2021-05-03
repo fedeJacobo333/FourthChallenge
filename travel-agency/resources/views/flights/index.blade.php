@@ -15,7 +15,7 @@
             </div>
             <div>
                 <input type="hidden" name="airline_id" id="airline_id" value="{{ $airline_id }}">
-                <button style="margin-bottom: 10px" class="button is-link" type="submit">Refresh</button>
+                <button class="button is-link" type="submit">Refresh</button>
             </div>
         </form>
         </div>
@@ -32,11 +32,11 @@
                 <h3>Llegada: {{ $flight->arrivalTime }}</h3>
                 <div class="actions">
                     <a href="/flights/{{ $flight->id }}/edit?airline_id={{ $flight->airline_id }}">Edit</a>
-                    <form style="display: contents" method="POST" action="/flights/{{ $flight->id }}">
+                    <form method="POST" action="/flights/{{ $flight->id }}">
                         @csrf
                         @method('DELETE')
 
-                        <button style="margin-bottom: 10px" class="button is-link" type="submit">Delete</button>
+                        <button class="button is-link" type="submit">Delete</button>
                     </form>
                 </div>
             </div>

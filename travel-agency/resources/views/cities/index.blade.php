@@ -9,18 +9,18 @@
     <div class="list">
         @foreach($cities as $city)
             <div class="card">
-                <h3 style="margin: auto"> {{ $city->name }} </h3>
+                <h3 > {{ $city->name }} </h3>
                 <div class="actions">
-                    <form style="display: contents" method="GET" action="/cities/{{ $city->id }}/edit">
+                    <form  method="GET" action="/cities/{{ $city->id }}/edit">
                         @csrf
 
-                        <button style="margin-bottom: 10px" class="button is-link" type="submit">Edit</button>
+                        <button class="button is-link" type="submit">Edit</button>
                     </form>
-                    <form style="display: contents" method="POST" action="/cities/{{ $city->id }}">
+                    <form method="POST" action="/cities/{{ $city->id }}">
                         @csrf
                         @method('DELETE')
 
-                        <button style="margin-bottom: 10px" class="button is-link" type="submit">Delete</button>
+                        <button class="button is-link" type="submit">Delete</button>
                     </form>
                 </div>
             </div>
