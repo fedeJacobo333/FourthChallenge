@@ -1,9 +1,18 @@
 <?php
 
+use App\Models\Flights;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::GET('/', function () {
     return view('layout');
+});
+
+Route::get('/', function () {
+    $from = \Carbon\CarbonImmutable::now();
+    $to = $from->add(1, 'week');
+    $flights = Flights::latest('departureTime')->whereBetween('departureTime', [$from->format('Y-m-d\TH:i:sP') , $to->format('Y-m-d\TH:i:sP')])->get();
+    return view('flights.index', ['flights' => $flights, 'airline_id'=>null, 'from'=>$from->format('Y-m-d\TH:i:s'), 'to'=>$to->format('Y-m-d\TH:i:s')]);
 });
 
 Route::group(['prefix' => '/cities'], function () {

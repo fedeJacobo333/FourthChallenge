@@ -11,7 +11,7 @@ class AirlinesController extends Controller
 
     public function index()
     {
-        $airlines = Airlines::latest()->get();
+        $airlines = Airlines::orderBy('name', 'ASC')->paginate(20);
         return view('airlines.index', ['airlines' => $airlines]);
     }
 

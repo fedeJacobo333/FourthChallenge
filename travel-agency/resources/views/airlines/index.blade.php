@@ -8,19 +8,25 @@
     <div class="list">
         @foreach($airlines as $airline)
             <div class="card">
-                <h2> {{ $airline->name }} </h2>
+                <a href="/airlines/{{ $airline->id }}"><h2> {{ $airline->name }} </h2></a>
                 <h3> {{ $airline->businessDescription }} </h3>
 
-                @if(count($airline->cities()->get()->all()) > 0)
-                    <tr><h3>Ciudades disponibles:</h3></tr>
-                    <tr>
-                        @foreach($airline->cities()->get()->all() as $city)
-                            <td><h4>{{ $city->name }}</h4></td>
-                        @endforeach
-                    </tr>
-                @else
-                    <h3>No hay ciudades disponibles</h3>
-                @endif
+                <div class="card-cities">
+                    @if(count($airline->cities()->get()->all()) > 0)
+                        <tr><h3>Ciudades disponibles:</h3></tr>
+                        <tr>
+                            @foreach(array_slice ($airline->cities()->get()->all(), 0, 2) as $city)
+                                <td><h4>{{ $city->name }}</h4></td>
+                            @endforeach
+
+                        @if(count($airline->cities()->get()->all()) > 2)
+                                    <td><h4>{{ (count($airline->cities()->get()->all())-2) }} mas</h4></td>
+                        @endif
+                        </tr>
+                    @else
+                        <h3>No hay ciudades disponibles</h3>
+                    @endif
+                </div>
 
                 <div class="actions">
                     <form method="GET" action="/airlines/{{ $airline->id }}/edit">
@@ -41,7 +47,7 @@
                         <a href="/flights?airline_id={{ $airline->id }}">Ver vuelos </a>
                     </div>
                 @else
-                    La aereolinea debe tener al menos 2 ciudades disponibles para crear un vuelo
+                    La aereolinea debe tener al menos 2 ciudades para crear vuelos
                 @endif
             </div>
         @endforeach

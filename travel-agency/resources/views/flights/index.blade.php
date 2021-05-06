@@ -7,11 +7,11 @@
             @csrf
             <div>
                 <label for="from">From</label>
-                <input type="datetime-local" id="from" name='from' size='9' value="{{ request('from') }}"/>
+                <input type="datetime-local" id="from" name='from' size='9' value="{{ $from }}"/>
             </div>
             <div>
                 <label for="to">To</label>
-                <input type="datetime-local" id="to" name='to' size='9' value="{{ request('to') }}"/>
+                <input type="datetime-local" id="to" name='to' size='9' value="{{ $to }}"/>
             </div>
             <div>
                 <input type="hidden" name="airline_id" id="airline_id" value="{{ $airline_id }}">
@@ -22,10 +22,12 @@
     <div class="list">
         @foreach($flights as $flight)
             <div class="card">
-                <div class="card-header">
-                    <h2>{{ $flight->airline['name'] }}</h2>
-                    <h2>#{{ $flight->id }}</h2>
-                </div>
+                <a href="flights/{{ $flight->id }}">
+                    <div class="card-header">
+                        <h2>{{ $flight->airline['name'] }}</h2>
+                        <h2>#{{ $flight->id }}</h2>
+                    </div>
+                </a>
                 <h3>Desde: {{ $flight->departureCity()->first()['name'] }}</h3>
                 <h3>Hasta: {{ $flight->arrivalCity()->first()['name'] }}</h3>
                 <h3>Salida: {{ $flight->departureTime }}</h3>

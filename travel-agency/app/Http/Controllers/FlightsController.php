@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Airlines;
 use App\Models\Flights;
+use function MongoDB\BSON\toCanonicalExtendedJSON;
 
 class FlightsController extends Controller
 {
@@ -15,18 +16,22 @@ class FlightsController extends Controller
         $to = request('to');
         if($airline_id) {
             if($from && $to){
-                $flights = Airlines::find($airline_id)->flights()->whereBetween('departureTime', [$from, $to])->orderBy('departureTime')->get();
+                $flights = Airlines::find($airline_id)->flights()->whereBetween('departureTime', [$from, $to])->orderBy('departureTime')->paginate(20);
+                list($from, $to) = $this->stringToDate($from, $to);
             }else{
-                $flights = Airlines::find($airline_id)->flights()->orderBy('departureTime')->get();
+                list($from, $to) = $this->initializeDates();
+                $flights = Airlines::find($airline_id)->flights()->orderBy('departureTime')->paginate(20);
             }
-            return view('flights.index', ['flights' => $flights, 'airline_id'=>$airline_id]);
+            return view('flights.index', ['flights' => $flights, 'airline_id'=>$airline_id, 'from'=>$from->format('Y-m-d\TH:i:s'), 'to'=>$to->format('Y-m-d\TH:i:s')]);
         }else {
             if($from && $to){
-                $flights = Flights::latest('departureTime')->whereBetween('departureTime', [$from, $to])->get();
+                $flights = Flights::latest('departureTime')->whereBetween('departureTime', [$from, $to])->paginate(20);
+                list($from, $to) = $this->stringToDate($from, $to);
             }else{
-                $flights = Flights::latest('departureTime')->get();
+                list($from, $to) = $this->initializeDates();
+                $flights = Flights::latest('departureTime')->whereBetween('departureTime', [$from->format('Y-m-d\TH:i:s') , $to->format('Y-m-d\TH:i:s')])->paginate(15);
             }
-            return view('flights.index', ['flights' => $flights, 'airline_id'=>null]);
+            return view('flights.index', ['flights' => $flights, 'airline_id'=>null, 'from'=>$from->format('Y-m-d\TH:i:s'), 'to'=>$to->format('Y-m-d\TH:i:s')]);
         }
     }
 
@@ -92,5 +97,19 @@ class FlightsController extends Controller
 
     public function refresh(){
 
+    }
+
+    public function stringToDate($from, $to): array
+    {
+        $from = new \Carbon\CarbonImmutable($from);
+        $to = new \Carbon\CarbonImmutable($to);
+        return array($from, $to);
+    }
+
+    public function initializeDates(): array
+    {
+        $from = \Carbon\CarbonImmutable::now();
+        $to = $from->add(1, 'week');
+        return array($from, $to);
     }
 }

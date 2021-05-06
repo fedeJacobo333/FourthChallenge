@@ -9,7 +9,7 @@ class CitiesController extends Controller
 
     public function index()
     {
-        $cities = Cities::latest()->get();
+        $cities = Cities::orderBy('name', 'ASC')->paginate(20);
         return view('cities.index', ['cities' => $cities]);
     }
 

@@ -8,8 +8,8 @@
     </div>
     <div class="list">
         @foreach($cities as $city)
-            <div class="card">
-                <h3 > {{ $city->name }} </h3>
+            <div class="card city">
+                <a href="/cities/{{ $city->id }}"><h3 > {{ $city->name }} </h3></a>
                 <div class="actions">
                     <form  method="GET" action="/cities/{{ $city->id }}/edit">
                         @csrf

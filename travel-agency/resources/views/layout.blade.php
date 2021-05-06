@@ -2,7 +2,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Agency</title>
 </head>
 
@@ -20,8 +21,8 @@
         </div>
     </header>
 
-<div class="container">
-    @yield('content')
-</div>
+    <div class="container">
+        @yield('content')
+    </div>
 </body>
 </html>

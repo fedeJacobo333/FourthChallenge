@@ -1,19 +1,23 @@
 @extends('layout')
 
 @section('content')
-
-    <h1>Informacion de la aereolinea</h1>
-
-    <h2 > Nombre: {{ $airline->name }} </h2>
-    <h3 > Descripcion de la empresa: {{ $airline->businessDescription }} </h3>
-    <h3 >Ciudades disponibles:</h3>
-    @foreach($airline->cities()->get()->all() as $city)
-        <h4>{{ $city->name }}</h4>
-    @endforeach
-    <br>
-    <a href="/flights/create?airline_id={{ $airline->id }}">Crear vuelo </a>
-    <a href="/flights?airline_id={{ $airline->id }}">Ver vuelos </a>
-
+    <div class="create-container">
+        <div class="form">
+            <h1> Aereolinea  {{ $airline->name }} </h1>
+            <h2> {{ $airline->businessDescription }} </h2>
+            <h3 >Ciudades disponibles:</h3>
+            <ul>
+                @foreach($airline->cities()->get()->all() as $city)
+                    <il><h4>{{ $city->name }}</h4></il>
+                @endforeach
+            </ul>
+            <br>
+            <div>
+                <a class="action-create" href="/flights/create?airline_id={{ $airline->id }}">Crear vuelo </a>
+                <a class="action-create" href="/flights?airline_id={{ $airline->id }}">Ver vuelos </a>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
