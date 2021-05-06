@@ -47,7 +47,7 @@
                         <a href="/flights?airline_id={{ $airline->id }}">Ver vuelos </a>
                     </div>
                 @else
-                    La aereolinea debe tener al menos 2 ciudades para crear vuelos
+                    Agregue ciudades para crear un vuelo
                 @endif
             </div>
         @endforeach
